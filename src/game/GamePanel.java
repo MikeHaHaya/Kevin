@@ -72,10 +72,15 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
         for (int i = 0; i < bodyParts; i++) {
+
             if (i == 0) {
+                // The snake's head.
+
                 graphics.setColor(Color.GREEN);
                 graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             } else {
+                // The snake's body.
+
                 graphics.setColor(new Color(45, 180, 0));
                 graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             }
@@ -96,8 +101,8 @@ public class GamePanel extends JPanel implements ActionListener {
     public void move() {
 
         for (int i = bodyParts; i > 0; i--) {
-            x[i] = x[i-1];
-            y[i] = y[i-1];
+            x[i] = x[i - 1];
+            y[i] = y[i - 1];
         }
 
         switch (direction) {
@@ -168,10 +173,12 @@ public class GamePanel extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+
         if (running) {
             move();
             checkApple();
             checkCollisions();
+
         } else {
             repaint();
         }
