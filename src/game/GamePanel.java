@@ -26,8 +26,8 @@ public class GamePanel extends JPanel implements ActionListener {
     Random random;
 
     /**
-    * Creates the basic game panel and launches 'startGame' method.
-    *  */
+     * Creates the basic game panel and launches 'startGame' method.
+     */
     GamePanel() {
 
         random = new Random();
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements ActionListener {
     /**
      * Starts the base game functions:
      * apples, 'running' boolean, and a timer.
-     *  */
+     */
     public void startGame() {
         newApple();
         running = true;
@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     /**
      * Paints the panel and launches 'draw' method.
-     *  */
+     */
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         draw(graphics);
@@ -60,27 +60,60 @@ public class GamePanel extends JPanel implements ActionListener {
 
     /**
      * Draw objects on the panel:
-     * Optional grid, apples
-     *  */
+     * Optional grid, apples, snake
+     */
     public void draw(Graphics graphics) {
 
-        for (int i=0; i<SCREEN_HEIGHT/UNIT_SIZE; i++) {
-            graphics.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
-            graphics.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
+        for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
+            graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
+            graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
         }
         graphics.setColor(Color.RED);
         graphics.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+        for (int i = 0; i < bodyParts; i++) {
+            if (i == 0) {
+                graphics.setColor(Color.GREEN);
+                graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            } else {
+                graphics.setColor(new Color(45, 180, 0));
+                graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            }
+        }
     }
 
     /**
-     * Creates new apples
-     *  */
+     * Creates new random apples.
+     */
     public void newApple() {
-        appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE) * UNIT_SIZE);
-        appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE) * UNIT_SIZE);
+        appleX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE);
+        appleY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE);
     }
 
+    /**
+     * Moves the snake.
+     */
     public void move() {
+
+        for (int i = bodyParts; i > 0; i--) {
+            x[i] = x[i-1];
+            y[i] = y[i-1];
+        }
+
+        switch (direction) {
+            case 'U':
+                y[0] = y[0] - UNIT_SIZE;
+                break;
+            case 'D':
+                y[0] = y[0] + UNIT_SIZE;
+                break;
+            case 'L':
+                x[0] = x[0] - UNIT_SIZE;
+                break;
+            case 'R':
+                x[0] = x[0] + UNIT_SIZE;
+                break;
+        }
 
     }
 
@@ -90,18 +123,61 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void checkCollisions() {
 
+        // Checks if head collides with body.
+        for (int i = bodyParts; i > 0; i--) {
+            if ((x[0] == x[i]) && (y[0] == y[i])) {
+                running = false;
+            }
+        }
+
+        // Checks if head touches left border.
+        if (x[0] < 0) {
+            running = false;
+        }
+
+        // Checks if head touches right border.
+        if (x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+
+        // Checks if head touches up border.
+        if (y[0] < 0) {
+            running = false;
+        }
+
+        // Checks if head touches bottom border.
+        if (y[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+
+        // Stops the timer when the game is over.
+        if (!running) {
+            timer.stop();
+        }
+
     }
 
     public void gameOver(Graphics graphics) {
 
     }
 
+    /**
+     * Checks if the game is running or not.
+     * If running: actives move, checkApples and checkCollisions methods.
+     * Else: actives repaint method.
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
-
+        if (running) {
+            move();
+            checkApple();
+            checkCollisions();
+        } else {
+            repaint();
+        }
     }
 
-    public class MyKeyAdapter extends KeyAdapter{
+    public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent event) {
 
