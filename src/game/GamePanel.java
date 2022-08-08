@@ -66,24 +66,28 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (running) {
 
+            // Grid
             for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
                 graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
+
+            // Apples
             graphics.setColor(Color.RED);
             graphics.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
+            // Snake
             for (int i = 0; i < bodyParts; i++) {
-
                 if (i == 0) {
                     // The snake's head.
-
                     graphics.setColor(Color.GREEN);
                     graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 } else {
                     // The snake's body.
-
                     graphics.setColor(new Color(45, 180, 0));
+                    // Random snake colors
+                    graphics.setColor
+                            (new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
                     graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
             }
@@ -202,10 +206,8 @@ public class GamePanel extends JPanel implements ActionListener {
             move();
             checkApple();
             checkCollisions();
-
-        } else {
-            repaint();
         }
+            repaint();
     }
 
     public class MyKeyAdapter extends KeyAdapter {
