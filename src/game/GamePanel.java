@@ -14,8 +14,8 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
     static final int DELAY = 75;
-    final int x[] = new int[GAME_UNITS];
-    final int y[] = new int[GAME_UNITS];
+    final int[] x = new int[GAME_UNITS];
+    final int[] y = new int[GAME_UNITS];
     int bodyParts = 6;
     int applesEaten;
     int appleX;
@@ -130,14 +130,21 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Checks if any apples have been eaten
+     * */
     public void checkApple() {
         if ((x[0] == appleX) && (y[0] == appleY)) {
+            System.out.println("Apple eaten");
             bodyParts++;
             applesEaten++;
             newApple();
         }
     }
 
+    /**
+     * Checks to see any collisions with the walls or itself.
+     * */
     public void checkCollisions() {
 
         // Checks if head collides with body.
@@ -210,6 +217,9 @@ public class GamePanel extends JPanel implements ActionListener {
             repaint();
     }
 
+    /**
+     * Checks if any button is pressed and order the snake what to do in each case.
+     * */
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent event) {
