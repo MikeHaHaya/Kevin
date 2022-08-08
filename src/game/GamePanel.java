@@ -59,31 +59,37 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Draw objects on the panel:
+     * Draws objects on the panel:
      * Optional grid, apples, snake
      */
     public void draw(Graphics graphics) {
 
-        for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
-            graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-            graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
-        }
-        graphics.setColor(Color.RED);
-        graphics.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+        if (running) {
 
-        for (int i = 0; i < bodyParts; i++) {
-
-            if (i == 0) {
-                // The snake's head.
-
-                graphics.setColor(Color.GREEN);
-                graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
-            } else {
-                // The snake's body.
-
-                graphics.setColor(new Color(45, 180, 0));
-                graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
+                graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
+                graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
+            graphics.setColor(Color.RED);
+            graphics.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+            for (int i = 0; i < bodyParts; i++) {
+
+                if (i == 0) {
+                    // The snake's head.
+
+                    graphics.setColor(Color.GREEN);
+                    graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                } else {
+                    // The snake's body.
+
+                    graphics.setColor(new Color(45, 180, 0));
+                    graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
+            }
+
+        } else {
+            gameOver(graphics);
         }
     }
 
@@ -128,6 +134,7 @@ public class GamePanel extends JPanel implements ActionListener {
         for (int i = bodyParts; i > 0; i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
                 running = false;
+                break;
             }
         }
 
@@ -158,8 +165,15 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Draws 'Game Over' on the screen when it's game over.
+     * */
     public void gameOver(Graphics graphics) {
-
+        // Game Over text
+        graphics.setColor(Color.RED);
+        graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics = getFontMetrics(graphics.getFont());
+        graphics.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
     }
 
     /**
