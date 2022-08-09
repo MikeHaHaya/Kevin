@@ -251,4 +251,8 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
+
+    public static void createAppleTest() {
+        System.out.println("apple");
+    }
 }
