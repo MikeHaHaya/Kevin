@@ -146,6 +146,7 @@ public class GamePanel extends JPanel implements ActionListener {
      */
     public void checkCollisions() {
 
+        // TODO -- Fix fast button mash causing game over
         // Checks if head collides with body.
         for (int i = bodyParts; i > 0; i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
