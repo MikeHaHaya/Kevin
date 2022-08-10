@@ -107,6 +107,8 @@ public class GamePanel extends JPanel implements ActionListener {
      * Creates new random apples.
      */
     public void newApple() {
+        // TODO -- Round up or down each value to a different one that can be divided by 25.
+        // TODO -- Make sure you first get the correct value and only then set the value of appleX, appleY.
         appleX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE);
         appleY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE);
     }
@@ -134,7 +136,6 @@ public class GamePanel extends JPanel implements ActionListener {
      * Checks if any apples have been eaten
      * */
     public void checkApple() {
-        // TODO -- Fix checkApple to see why it doesn't get eaten
         if ((x[0] == appleX) && (y[0] == appleY)) {
             System.out.println("Apple eaten");
             bodyParts++;
@@ -203,7 +204,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Checks if the game is running or not.
+     * Constantly checks if the game is running or not.
      * If running: actives move, checkApples and checkCollisions methods.
      * Else: actives repaint method.
      */
@@ -249,6 +250,10 @@ public class GamePanel extends JPanel implements ActionListener {
                     break;
             }
         }
+    }
+
+    public int roundTo25(int value) {
+        return 0;
     }
 
 }
