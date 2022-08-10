@@ -109,8 +109,8 @@ public class GamePanel extends JPanel implements ActionListener {
     public void newApple() {
         // TODO -- Round up or down each value to a different one that can be divided by 25.
         // TODO -- Make sure you first get the correct value and only then set the value of appleX, appleY.
-        appleX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE);
-        appleY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE);
+        int x = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE);
+        int y = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE);
     }
 
     /**
@@ -252,7 +252,23 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public int roundTo25(int value) {
+    public static int roundTo25(int value, int screenLimit) {
+
+        // Should round up or down to 25
+        // TODO -- Check if decimal point does equal 0
+        if (value/25 == 0) {
+            // Switch up
+
+        } else if(value + 25 > screenLimit) {
+            // Switch down
+
+        } else {
+            // Switch up
+        }
+
+
+
+        // Should return a correct number.
         return 0;
     }
 
