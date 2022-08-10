@@ -67,10 +67,10 @@ public class GamePanel extends JPanel implements ActionListener {
         if (running) {
 
             // Grid
-            for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
-                graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-                graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
-            }
+//            for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
+//                graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
+//                graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
+//            }
 
             // Apples
             graphics.setColor(Color.RED);
@@ -107,10 +107,8 @@ public class GamePanel extends JPanel implements ActionListener {
      * Creates new random apples.
      */
     public void newApple() {
-        // TODO -- Round up or down each value to a different one that can be divided by 25.
-        // TODO -- Make sure you first get the correct value and only then set the value of appleX, appleY.
-        int x = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE);
-        int y = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE);
+        appleX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
+        appleY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
     }
 
     /**
@@ -134,7 +132,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     /**
      * Checks if any apples have been eaten
-     * */
+     */
     public void checkApple() {
         if ((x[0] == appleX) && (y[0] == appleY)) {
             System.out.println("Apple eaten");
@@ -146,7 +144,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     /**
      * Checks to see any collisions with the walls or itself.
-     * */
+     */
     public void checkCollisions() {
 
         // Checks if head collides with body.
@@ -186,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     /**
      * Draws 'Game Over' on the screen when it's game over.
-     * */
+     */
     public void gameOver(Graphics graphics) {
         // 'Score' text
         graphics.setColor(Color.RED);
@@ -216,12 +214,12 @@ public class GamePanel extends JPanel implements ActionListener {
             checkApple();
             checkCollisions();
         }
-            repaint();
+        repaint();
     }
 
     /**
      * Checks if any button is pressed and order the snake what to do in each case.
-     * */
+     */
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent event) {
@@ -250,26 +248,6 @@ public class GamePanel extends JPanel implements ActionListener {
                     break;
             }
         }
-    }
-
-    public static int roundTo25(int value, int screenLimit) {
-
-        // Should round up or down to 25
-        // TODO -- Check if decimal point does equal 0
-        if (value/25 == 0) {
-            // Switch up
-
-        } else if(value + 25 > screenLimit) {
-            // Switch down
-
-        } else {
-            // Switch up
-        }
-
-
-
-        // Should return a correct number.
-        return 0;
     }
 
 }
