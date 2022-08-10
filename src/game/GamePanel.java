@@ -135,7 +135,6 @@ public class GamePanel extends JPanel implements ActionListener {
      * */
     public void checkApple() {
         // TODO -- Fix checkApple to see why it doesn't get eaten
-        // TODO -- Check apple system
         if ((x[0] == appleX) && (y[0] == appleY)) {
             System.out.println("Apple eaten");
             bodyParts++;
@@ -252,7 +251,4 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public static void createAppleTest() {
-        System.out.println("apple");
-    }
 }
